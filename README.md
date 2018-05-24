@@ -1,0 +1,7 @@
+# C/C++/Perl/Ruby/Python 2/Python 3 polyglot
+
+A few days ago [a tweet of @takesako](https://twitter.com/takesako/status/998063456279449601?s=20) got me thinking. He created a very clever C/C++/Perl/Ruby/Python code polyglot, that will run no matter if it is compiled with a C or C++ compiler first and then run or passed to a Ruby, Perl or Python 2 interpreter directly. His tweet be found in [original.c](original/original.c) in this repository and a [compile.sh](original/compile.sh) that runs it.
+
+The first improvement I wanted to do was make it run under Python 2 and 3, as his PoC only works for Python 2. That was pretty easy, simply replacing `print'Python'` with `print('Python')`. You can find that version in [the python_2_and_3_improvement folder](python_2_and_3_improvement/code.c).
+
+The next thing was a little bit more tricky. As I am currently developing a Burp Proxy extension that is able to test HTTP-based file upload forms, I was looking for a file that would interact with [an attacker defined server](https://portswigger.net/burp/help/collaborator) (a DNS query and if possible HTTP request) in all those languages. So I created a file that would do at least a [DNS query to a subdomain of example.burpcollaborator.net](url_interaction/code.c). Later on I realized that it won't be super helpful, as we will probably still need to upload that file with all the different file extensions (e.g. .pl or .py) and content types (e.g. text/x-python) to detect issues, but it was a very nice little challenge.
